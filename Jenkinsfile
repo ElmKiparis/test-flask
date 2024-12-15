@@ -21,19 +21,12 @@ pipeline {
         }
 
         stage('Test') {
-            agent { 
-                docker { 
-                    image 'python:3.9-alpine'
-                    args '-u root'
-                    reuseNode true
-                } 
-            }
 
             steps {
                 sh '''
                     apk add --update python3 py3-pip
                     pip3 install Flask xmlrunner
-                    python3 app_tests.py
+                    python3 test.py
                 '''
             }
         }
