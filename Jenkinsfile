@@ -34,18 +34,7 @@ pipeline {
                 sh 'pip install xmlrunner'
                 sh 'python3 test.py'
             }
-
-            post {
-                always {
-                    junit 'test-reports/*.xml'
-                }
-                success {
-                    echo "Application testing successfully completed"
-                }
-                failure {
-                    echo "Oooppss!!! Tests failed!"
-                }
-            }
+		
         }
     }
 }
