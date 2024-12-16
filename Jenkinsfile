@@ -32,7 +32,7 @@ pipeline {
                 sh 'apk add --update python3 py-pip'
                 sh 'pip install Flask'
                 sh 'pip install xmlrunner'
-                sh 'python3 test.py'
+                sh 'python3 app_tests.py'
             }
 
             post {
