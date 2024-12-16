@@ -24,7 +24,7 @@ pipeline {
             agent { 
                 docker { 
                     image 'alpine'
-                    args '--user root'
+                    args '-v /var/jenkins_home/workspace:/var/jenkins_home/workspace --user root'
                 } 
             }
 
