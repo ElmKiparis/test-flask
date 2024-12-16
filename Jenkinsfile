@@ -35,17 +35,6 @@ pipeline {
                 sh 'python3 app_tests.py'
             }
 
-            post {
-                always {
-                    junit 'test-reports/*.xml'
-                }
-                success {
-                    echo "Application testing successfully completed"
-                }
-                failure {
-                    echo "Oooppss!!! Tests failed!"
-                }
-            }
         }
     }
 }
