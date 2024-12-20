@@ -1,13 +1,11 @@
 pipeline {
-    options { 
-        timestamps() 
+    options {
+        timestamps()
     }
-
-    agent none
+    agent any
 
     stages {
-        stage('Check scm') {
-            agent any
+        stage('Check SCM') {
             steps {
                 checkout scm
             }
@@ -21,20 +19,26 @@ pipeline {
         }
 
         stage('Test') {
-            agent { 
-                docker { 
-                    image 'alpine'
-                    args '-v /var/jenkins_home/workspace:/var/jenkins_home/workspace --user root'
-                } 
-            }
-
             steps {
-                sh 'apk add --update python3 py-pip'
+                sh 'python3 --version'
+                sh 'pip --version'
+
                 sh 'pip install Flask'
                 sh 'pip install xmlrunner'
+                
                 sh 'python3 app_tests.py'
             }
-
+            post {
+                always {
+                    junit 'test-reports/*.xml'
+                }
+                success {
+                    echo "Application testing successfully completed"
+                }
+                failure {
+                    echo "Oooppss!!! Tests failed!"
+                }
+            }
         }
     }
 }
